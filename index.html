@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="theme-color" content="#1B2B4B"/>
+<title>GeniusOne — Typing Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/css/app.css"/>
+</head>
+<body>
+<div id="app">
+
+  <!-- ═══ LOGIN ═══ -->
+  <div id="screen-login" class="screen active">
+    <div class="login-wrap">
+      <div class="login-card">
+        <div class="brand" style="display:flex;justify-content:center;align-items:center;padding-bottom:1.1rem;border-bottom:1px solid var(--gray-200)">
+          <img src="/Logo.PNG" alt="GeniusOne" id="login-logo-img"
+            style="height:60px;object-fit:contain;max-width:220px"
+            onerror="document.getElementById('login-logo-img').style.display='none';document.getElementById('login-logo-fallback').style.display='flex'"/>
+          <div id="login-logo-fallback" style="display:none;align-items:center;gap:12px">
+            <div style="width:46px;height:46px;background:#D42B2B;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:22px;font-family:Arial;flex-shrink:0">G</div>
+            <div>
+              <div style="font-size:22px;font-weight:700;color:#1B2B4B;font-family:Arial,sans-serif">GeniusOne</div>
+              <div style="font-size:10px;color:#E8511A;letter-spacing:1.2px;text-transform:uppercase;font-family:Arial,sans-serif;font-weight:500">Excellence Delivered</div>
+            </div>
+          </div>
+        </div>
+        <h2 class="login-title">Sign in to Typing Portal</h2>
+        <div id="login-error" class="alert alert-error hidden"></div>
+        <div class="field"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"/></div>
+        <div class="field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"/></div>
+        <button class="btn btn-primary btn-full" onclick="doLogin()">Sign In</button>
+        <p class="login-hint">Default: admin@geniusonesolutions.com / Admin@123</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MAIN APP ═══ -->
+  <div id="screen-app" class="screen" style="flex-direction:column">
+
+    <!-- Mobile top bar -->
+    <div class="mobile-topbar">
+      <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+        <svg width="22" height="22" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+      <span class="mobile-topbar-title" id="mobile-page-title">GeniusOne Portal</span>
+      <button class="btn-logout" onclick="doLogout()" style="color:rgba(255,255,255,0.6)">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+
+    <!-- Sidebar overlay for mobile -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <div style="display:flex;flex:1;min-height:0;overflow:hidden">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+          <img src="/Logo.PNG" alt="GeniusOne" id="sidebar-logo-img"
+            style="height:38px;object-fit:contain;max-width:160px;filter:brightness(0) invert(1)"
+            onerror="document.getElementById('sidebar-logo-img').style.display='none';document.getElementById('sidebar-logo-fallback').style.display='flex'"/>
+          <div id="sidebar-logo-fallback" style="display:none;align-items:center;gap:8px">
+            <div style="width:32px;height:32px;background:#D42B2B;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:15px;font-family:Arial;flex-shrink:0">G</div>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:#fff;font-family:Arial,sans-serif">GeniusOne</div>
+              <div style="font-size:9px;color:rgba(255,255,255,0.5);letter-spacing:0.8px;text-transform:uppercase;font-family:Arial,sans-serif">Typing Portal</div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a class="nav-item admin-only hidden" data-view="dashboard" onclick="navTo('dashboard')">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            <span>Dashboard</span>
+          </a>
+          <a class="nav-item" data-view="records" onclick="navTo('records')">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <span>Records</span>
+          </a>
+          <a class="nav-item" onclick="newRecord();closeSidebar()">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            <span>New Record</span>
+          </a>
+          <a class="nav-item admin-only hidden" data-view="users" onclick="navTo('users')">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Users</span>
+          </a>
+          <a class="nav-item admin-only hidden" data-view="settings" onclick="navTo('settings')">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="user-info">
+            <div class="user-avatar" id="user-avatar">A</div>
+            <div style="min-width:0">
+              <div class="user-name" id="user-name">Admin</div>
+              <div class="user-role" id="user-role">admin</div>
+            </div>
+          </div>
+          <button class="btn-logout" onclick="doLogout()" title="Sign out">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <!-- DASHBOARD -->
+        <div id="view-dashboard" class="view">
+          <div class="view-header"><h1>Dashboard</h1><button class="btn btn-primary" onclick="newRecord()">+ New Record</button></div>
+          <div class="stats-grid">
+            <div class="stat-card"><div class="stat-label">Total Records</div><div class="stat-value" id="stat-total">—</div></div>
+            <div class="stat-card"><div class="stat-label">Today</div><div class="stat-value" id="stat-today">—</div></div>
+            <div class="stat-card"><div class="stat-label">Completed</div><div class="stat-value" id="stat-completed">—</div></div>
+            <div class="stat-card"><div class="stat-label">In Progress</div><div class="stat-value" id="stat-inprogress">—</div></div>
+          </div>
+          <div class="section-card">
+            <div class="section-header-bar"><h2>Recent Records</h2></div>
+            <div class="table-wrap" id="recent-records-table"></div>
+          </div>
+        </div>
+
+        <!-- RECORDS -->
+        <div id="view-records" class="view">
+          <div class="view-header"><h1>Records</h1><button class="btn btn-primary" onclick="newRecord()">+ New Record</button></div>
+          <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search by order #, address, owner…" oninput="debounceSearch()"/>
+            <select id="status-filter" onchange="loadRecords()">
+              <option value="">All Status</option><option value="draft">Draft</option>
+              <option value="in_progress">In Progress</option><option value="completed">Completed</option><option value="reviewed">Reviewed</option>
+            </select>
+          </div>
+          <div class="table-wrap" id="records-table-wrap">
+            <div id="records-table"></div>
+          </div>
+          <div class="pagination" id="pagination"></div>
+        </div>
+
+        <!-- PORTAL -->
+        <div id="view-portal" class="view">
+          <div class="view-header">
+            <div><h1 id="portal-title">New Record</h1><div class="view-sub" id="portal-sub"></div></div>
+            <div class="btn-group">
+              <select id="portal-status" class="status-select">
+                <option value="draft">Draft</option><option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option><option value="reviewed">Reviewed</option>
+              </select>
+              <button class="btn btn-secondary" onclick="previewCurrentRecord()">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span>Preview</span>
+              </button>
+              <button class="btn btn-secondary" onclick="showView('records')">Cancel</button>
+              <button class="btn btn-primary" onclick="saveRecord()">Save</button>
+            </div>
+          </div>
+          <div id="portal-alert" class="alert hidden"></div>
+          <div id="portal-form"></div>
+        </div>
+
+        <!-- USERS -->
+        <div id="view-users" class="view">
+          <div class="view-header"><h1>User Management</h1><button class="btn btn-primary" onclick="showAddUserModal()">+ Add User</button></div>
+          <div class="table-wrap" id="users-table"></div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div id="view-settings" class="view">
+          <div class="view-header"><h1>Settings</h1></div>
+          <div id="settings-content"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div id="modal-backdrop" class="modal-backdrop hidden" onclick="closeModal()">
+    <div class="modal wide" onclick="event.stopPropagation()">
+      <div class="modal-header"><h3 id="modal-title">Preview</h3><button class="modal-close" onclick="closeModal()">×</button></div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+</div>
+<script src="/js/app.js"></script>
+</body>
+</html>
