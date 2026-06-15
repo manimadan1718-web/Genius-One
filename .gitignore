@@ -5,3 +5,4 @@ node_modules/
 npm-debug.log*
 .vercel
 dist/
+node-v22.22.3-x64.msi 
